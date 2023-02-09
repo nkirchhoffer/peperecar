@@ -25,6 +25,11 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   constraints:
+                    nullable: true
+                  name: phone
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
                     nullable: false
                   name: email
                   type: VARCHAR(255)
