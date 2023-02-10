@@ -24,7 +24,7 @@ public class Location {
 
     @Column(name = "zip_code")
     @NotNull
-    private Long zipCode;
+    private String zipCode;
 
     @Column(name = "city")
     @NotNull

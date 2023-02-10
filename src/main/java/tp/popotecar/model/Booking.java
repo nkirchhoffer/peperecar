@@ -32,7 +32,7 @@ public class Booking {
 
     @OneToOne
     @JoinColumn(name = "step_id", referencedColumnName = "id")
-    private Step endStep;
+    private Step step;
 
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")

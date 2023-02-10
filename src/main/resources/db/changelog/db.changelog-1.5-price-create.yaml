@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.5.1-price
+      author: Lily
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: price_pkey
+                    nullable: false
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: start_step_id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: end_step_id
+                  type: bigint
+            tableName: price
+  - changeSet:
+      id: 1.5.2-price
+      author: Lily
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: start_step_id
+            baseTableName: price
+            constraintName: fk_start_step_rel_price
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: step
+        - addForeignKeyConstraint:
+            baseColumnNames: end_step_id
+            baseTableName: price
+            constraintName: fk_end_step_rel_price
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: step

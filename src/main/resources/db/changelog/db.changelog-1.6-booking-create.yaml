@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.6.1-booking
+      author: Lily
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: booking_pkey
+                    nullable: false
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: validated
+                  type: boolean
+              - column:
+                  constraints:
+                    nullable: false
+                  name: nb_passenger
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ride_id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: step_id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: bigint
+            tableName: booking
+  - changeSet:
+      id: 1.6.2-booking
+      author: Lily
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ride_id
+            baseTableName: booking
+            constraintName: fk_ride_rel_booking
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: ride
+        - addForeignKeyConstraint:
+            baseColumnNames: step_id
+            baseTableName: booking
+            constraintName: fk_step_rel_booking
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: step
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: booking
+            constraintName: fk_user_rel_booking
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: user

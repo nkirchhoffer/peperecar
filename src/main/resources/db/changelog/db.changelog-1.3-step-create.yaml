@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.3.1-step
+      author: Lily
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: step_pkey
+                    nullable: false
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: start_date
+                  type: date
+              - column:
+                  constraints:
+                    nullable: false
+                  name: end_date
+                  type: date
+              - column:
+                  constraints:
+                    nullable: false
+                  name: next_step_id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: location_id
+                  type: bigint
+            tableName: step
+  - changeSet:
+      id: 1.3.2-step
+      author: Lily
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: next_step_id
+            baseTableName: step
+            constraintName: fk_next_step_rel_step
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: step
+        - addForeignKeyConstraint:
+            baseColumnNames: location_id
+            baseTableName: step
+            constraintName: fk_location_rel_step
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: location
