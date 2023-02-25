@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.8.1-car
+      author: Lily
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: car_pkey
+                    nullable: false
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: brand
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: model
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: true
+                  name: color
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: bigint
+            tableName: car
+  - changeSet:
+      id: 1.8.2-car
+      author: Lily
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: car
+            constraintName: fk_user_rel_car
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: user
