@@ -20,7 +20,7 @@ public class Location {
 
     @Column(name = "address")
     @NotNull
-    private String adress;
+    private String address;
 
     @Column(name = "zip_code")
     @NotNull

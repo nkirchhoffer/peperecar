@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import tp.popotecar.model.enumeration.Status;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,18 +31,16 @@ public class Ride {
     private LocalDate creationDate;
 
     @Column(name = "last_modification_date")
-    @NotNull
     private LocalDate lastModificationDate;
 
-    @OneToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne
     @JoinColumn(name="driver_id", referencedColumnName = "id")
     private User driver;
 
-    @OneToOne
-    @JoinColumn(name = "first_step_id", referencedColumnName = "id")
-    private Step firstStep;
+    @OneToMany(mappedBy="ride")
+    private List<Step> steps;
 }

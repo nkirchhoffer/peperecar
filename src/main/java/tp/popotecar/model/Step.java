@@ -20,19 +20,19 @@ public class Step {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "start_date")
+    @Column(name = "date")
     @NotNull
-    private LocalDate startDate;
+    private LocalDate date;
 
-    @Column(name = "end_date")
+    @Column(name = "position")
     @NotNull
-    private LocalDate endDate;
-
-    @OneToOne
-    @JoinColumn(name = "next_step_id", referencedColumnName = "id")
-    private Step nextStep;
+    private Long position;
 
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
+
+    @ManyToOne
+    @JoinColumn(name="ride_id", referencedColumnName = "id")
+    private Ride ride;
 }

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1.4.1-ride
+      id: 1.4.1-step
       author: Lily
       changes:
         - createTable:
@@ -9,72 +9,52 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: ride_pkey
+                    primaryKeyName: step_pkey
                     nullable: false
                   name: id
                   type: bigint
               - column:
                   constraints:
                     nullable: false
-                  name: max_passenger
-                  type: bigint
-              - column:
-                  constraints:
-                    nullable: false
-                  name: creation_date
+                  name: date
                   type: date
               - column:
                   constraints:
                     nullable: false
-                  name: last_modification_date
-                  type: date
-              - column:
-                  constraints:
-                    nullable: false
-                  name: status_id
+                  name: position
                   type: bigint
               - column:
                   constraints:
                     nullable: false
-                  name: driver_id
+                  name: location_id
                   type: bigint
               - column:
                   constraints:
                     nullable: false
-                  name: first_step_id
+                  name: ride_id
                   type: bigint
-            tableName: ride
+            tableName: step
   - changeSet:
-      id: 1.4.2-ride
+      id: 1.4.2-step
       author: Lily
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: status_id
-            baseTableName: ride
-            constraintName: fk_status_rel_ride
+            baseColumnNames: location_id
+            baseTableName: step
+            constraintName: fk_location_rel_step
             deferrable: false
             initiallyDeferred: false
             onDelete: NO ACTION
             onUpdate: NO ACTION
             referencedColumnNames: id
-            referencedTableName: status
+            referencedTableName: location
         - addForeignKeyConstraint:
-            baseColumnNames: driver_id
-            baseTableName: ride
-            constraintName: fk_user_driver_rel_ride
+            baseColumnNames: ride_id
+            baseTableName: step
+            constraintName: fk_ride_rel_step
             deferrable: false
             initiallyDeferred: false
             onDelete: NO ACTION
             onUpdate: NO ACTION
             referencedColumnNames: id
-            referencedTableName: user
-        - addForeignKeyConstraint:
-            baseColumnNames: first_step_id
-            baseTableName: ride
-            constraintName: fk_step_rel_ride
-            deferrable: false
-            initiallyDeferred: false
-            onDelete: NO ACTION
-            onUpdate: NO ACTION
-            referencedColumnNames: id
-            referencedTableName: step
+            referencedTableName: ride
