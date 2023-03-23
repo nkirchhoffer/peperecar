@@ -10,27 +10,19 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "location", schema = "public")
-public class Location {
+@Table(name = "city", schema = "public")
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "address")
-    @NotNull
-    private String address;
-
     @Column(name = "zip_code")
     @NotNull
     private String zipCode;
 
-    @Column(name = "city")
+    @Column(name = "name")
     @NotNull
-    private String city;
-
-    @Column(name = "country")
-    @NotNull
-    private String country;
+    private String name;
 }

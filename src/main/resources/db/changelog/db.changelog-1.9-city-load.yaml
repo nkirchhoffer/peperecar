@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.9-city-load
+      author: Lily
+      changes:
+        - loadData:
+            catalogName: city
+            columns:
+                - column:
+                      header: zip_code
+                      name: zip_code
+                      type: VARCHAR(255)
+                - column:
+                      header: name
+                      name: name
+                      type: VARCHAR(255)
+            encoding: UTF-8
+            file: data/city-data-load.csv
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: ;
+            tableName: city
+            usePreparedStatements: true

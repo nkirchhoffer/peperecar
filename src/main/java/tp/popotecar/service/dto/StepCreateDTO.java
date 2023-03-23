@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RideCreateDTO {
+public class StepCreateDTO {
 
-    private Long maxPassenger;
+    private LocalDate date;
+    private Long position;
 
-    private List<StepCreateDTO> steps;
+    private Long cityId;
 }

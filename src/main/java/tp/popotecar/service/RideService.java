@@ -9,12 +9,16 @@ import tp.popotecar.model.Ride;
 import tp.popotecar.model.User;
 import tp.popotecar.model.enumeration.Status;
 import tp.popotecar.repository.RideRepository;
+import tp.popotecar.repository.specification.RideSpecification;
 import tp.popotecar.service.dto.RideCreateDTO;
 import tp.popotecar.service.dto.RideDTO;
+import tp.popotecar.service.dto.StepCreateDTO;
 import tp.popotecar.service.dto.StepDTO;
+import tp.popotecar.service.dto.criteria.RideCriteria;
 import tp.popotecar.service.mapper.RideMapper;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,22 +48,26 @@ public class RideService {
 
             Long position = 1L;
 
-            for (StepDTO stepDTO : rideCreateDTO.getSteps()) {
+            for (StepCreateDTO stepDTO : rideCreateDTO.getSteps()) {
                 stepDTO.setPosition(position);
                 stepService.addStep(stepDTO, rideSaved);
                 position++;
             }
 
-            return rideMapper.toDto(
-                    rideRepository.findById(rideSaved.getId()).get()
-            );
+            return getRideById(rideSaved.getId());
         }
 
         return null;
     }
 
-    public Ride getRideById(Long id) {
-        return rideRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(""));
+    public RideDTO getRideById(Long id) {
+        Optional<Ride> ride = rideRepository.findById(id);
+        return ride.map(rideMapper::toDto).orElse(null);
+
+    }
+
+    public List<RideDTO> getRidesByCriteria(RideCriteria rideCriteria) {
+        List<Ride> rides = rideRepository.findAll(RideSpecification.specificationFromCriteria(rideCriteria));
+        return rideMapper.toDto(rides);
     }
 }

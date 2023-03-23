@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tp.popotecar.model.City;
 
 import java.time.LocalDate;
 
@@ -17,11 +18,5 @@ public class StepDTO {
 
     private Long position;
 
-    private String address;
-
-    private String zipCode;
-
-    private String city;
-
-    private String country;
+    private City city;
 }

@@ -26,7 +26,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: location_id
+                  name: city_id
                   type: bigint
               - column:
                   constraints:
@@ -39,15 +39,15 @@ databaseChangeLog:
       author: Lily
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: location_id
+            baseColumnNames: city_id
             baseTableName: step
-            constraintName: fk_location_rel_step
+            constraintName: fk_city_rel_step
             deferrable: false
             initiallyDeferred: false
             onDelete: NO ACTION
             onUpdate: NO ACTION
             referencedColumnNames: id
-            referencedTableName: location
+            referencedTableName: city
         - addForeignKeyConstraint:
             baseColumnNames: ride_id
             baseTableName: step

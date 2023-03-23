@@ -29,8 +29,8 @@ public class Step {
     private Long position;
 
     @OneToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private Location location;
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private City city;
 
     @ManyToOne
     @JoinColumn(name="ride_id", referencedColumnName = "id")

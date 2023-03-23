@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1.2-location
+      id: 1.9-city
       author: Lily
       changes:
         - createTable:
@@ -9,28 +9,18 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: location_pkey
+                    primaryKeyName: city_pkey
                     nullable: false
                   name: id
                   type: bigint
               - column:
                   constraints:
                     nullable: false
-                  name: address
-                  type: VARCHAR(255)
-              - column:
-                  constraints:
-                    nullable: false
                   name: zip_code
-                  type: VARCHAR(5)
-              - column:
-                  constraints:
-                    nullable: false
-                  name: city
                   type: VARCHAR(255)
               - column:
                   constraints:
                     nullable: false
-                  name: country
+                  name: name
                   type: VARCHAR(255)
-            tableName: location
+            tableName: city
