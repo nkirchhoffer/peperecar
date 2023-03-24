@@ -21,6 +21,11 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                  name: time
+                  type: time
+              - column:
+                  constraints:
+                    nullable: false
                   name: position
                   type: bigint
               - column:

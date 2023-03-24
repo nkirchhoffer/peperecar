@@ -2,6 +2,7 @@ package tp.popotecar.repository.specification;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.Specification;
 import tp.popotecar.model.Ride;
 import tp.popotecar.model.Step;
@@ -20,8 +21,7 @@ public class RideSpecification {
 
         return Specification
                 .where(hasStatus(rideCriteria.getStatus()))
-                .and(startDateBefore(rideCriteria.getBeforeDate()))
-                .and(startDateAfter(rideCriteria.getAfterDate()))
+                .and(hasDate(rideCriteria.getDate()))
                 .and(hasCityIdsAndPositions(rideCriteria.getStartCityId(), rideCriteria.getEndCityId()));
     }
 
@@ -30,14 +30,12 @@ public class RideSpecification {
                 status == null ? null : criteriaBuilder.equal(root.get("status"), status);
     }
 
-    private static Specification<Ride> startDateBefore(LocalDate date) {
-        return (root, query, criteriaBuilder) ->
-                date == null ? null : criteriaBuilder.lessThan(root.get("startDate"), date);
-    }
-
-    private static Specification<Ride> startDateAfter(LocalDate date) {
-        return (root, query, criteriaBuilder) ->
-                date == null ? null : criteriaBuilder.greaterThan(root.get("startDate"), date);
+    private static Specification<Ride> hasDate(LocalDate date) {
+        return (root, query, criteriaBuilder) -> {
+            if (date == null) return null;
+            Join<Ride, Step> stepJoin = root.join("steps");
+            return criteriaBuilder.equal(stepJoin.get("date"), date);
+        };
     }
 
     public static Specification<Ride> hasCityIdsAndPositions(Long startCityId, Long endCityId) {

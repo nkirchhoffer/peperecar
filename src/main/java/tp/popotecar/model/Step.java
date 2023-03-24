@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +24,10 @@ public class Step {
     @Column(name = "date")
     @NotNull
     private LocalDate date;
+
+    @Column(name = "time")
+    @NotNull
+    private LocalTime time;
 
     @Column(name = "position")
     @NotNull

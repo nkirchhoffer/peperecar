@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 public class StepCreateDTO {
 
     private LocalDate date;
+
+    private LocalTime time;
     private Long position;
 
     private Long cityId;

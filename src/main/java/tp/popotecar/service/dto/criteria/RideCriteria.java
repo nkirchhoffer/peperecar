@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import tp.popotecar.model.enumeration.Status;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -16,9 +17,11 @@ public class RideCriteria {
 
     Status status;
 
-    LocalDate beforeDate;
+    LocalDate date;
 
-    LocalDate afterDate;
+    LocalTime beforeTime;
+
+    LocalTime afterTime;
 
     Long startCityId;
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import tp.popotecar.model.City;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -15,6 +16,8 @@ import java.time.LocalDate;
 public class StepDTO {
 
     private LocalDate date;
+
+    private LocalTime time;
 
     private Long position;
 
