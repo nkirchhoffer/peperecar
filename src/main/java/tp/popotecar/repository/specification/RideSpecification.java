@@ -2,7 +2,6 @@ package tp.popotecar.repository.specification;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.Specification;
 import tp.popotecar.model.Ride;
 import tp.popotecar.model.Step;
@@ -22,7 +21,7 @@ public class RideSpecification {
         return Specification
                 .where(hasStatus(rideCriteria.getStatus()))
                 .and(hasDate(rideCriteria.getDate()))
-                .and(hasCityIdsAndPositions(rideCriteria.getStartCityId(), rideCriteria.getEndCityId()));
+                .and(hasCityIdsAndTimes(rideCriteria.getStartCityId(), rideCriteria.getEndCityId()));
     }
 
     private static Specification<Ride> hasStatus(Status status) {
@@ -38,22 +37,32 @@ public class RideSpecification {
         };
     }
 
-    public static Specification<Ride> hasCityIdsAndPositions(Long startCityId, Long endCityId) {
-        return (root, query, builder) -> {
+    private static Specification<Ride> startDateBefore(LocalDate date) {
+        return (root, query, criteriaBuilder) ->
+                date == null ? null : criteriaBuilder.lessThan(root.get("startDate"), date);
+    }
+
+    private static Specification<Ride> startDateAfter(LocalDate date) {
+        return (root, query, criteriaBuilder) ->
+                date == null ? null : criteriaBuilder.greaterThan(root.get("startDate"), date);
+    }
+
+    public static Specification<Ride> hasCityIdsAndTimes(Long startCityId, Long endCityId) {
+        return (root, query, criteriaBuilder) -> {
             Join<Ride, Step> stepJoin1 = root.join("steps");
             Join<Step, City> cityJoin1 = stepJoin1.join("city");
 
             Join<Ride, Step> stepJoin2 = root.join("steps");
             Join<Step, City> cityJoin2 = stepJoin2.join("city");
 
-            Predicate cityIdPredicate = builder.and(
-                    builder.equal(cityJoin1.get("id"), startCityId),
-                    builder.equal(cityJoin2.get("id"), endCityId)
+            Predicate cityIdPredicate = criteriaBuilder.and(
+                    criteriaBuilder.equal(cityJoin1.get("id"), startCityId),
+                    criteriaBuilder.equal(cityJoin2.get("id"), endCityId)
             );
 
-            Predicate positionPredicate = builder.lessThan(stepJoin1.get("position"), stepJoin2.get("position"));
+            Predicate timePredicate = criteriaBuilder.lessThan(stepJoin1.get("time"), stepJoin2.get("time"));
 
-            return builder.and(cityIdPredicate, positionPredicate);
+            return criteriaBuilder.and(cityIdPredicate, timePredicate);
         };
     }
 

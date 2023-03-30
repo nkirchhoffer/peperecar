@@ -29,10 +29,6 @@ public class Step {
     @NotNull
     private LocalTime time;
 
-    @Column(name = "position")
-    @NotNull
-    private Long position;
-
     @OneToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;

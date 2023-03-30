@@ -26,11 +26,6 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: position
-                  type: bigint
-              - column:
-                  constraints:
-                    nullable: false
                   name: city_id
                   type: bigint
               - column:

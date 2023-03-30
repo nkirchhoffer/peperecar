@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import tp.popotecar.service.RideService;
 import tp.popotecar.service.dto.RideCreateDTO;
 import tp.popotecar.service.dto.RideDTO;
+import tp.popotecar.service.dto.StepCreateDTO;
 import tp.popotecar.service.dto.criteria.RideCriteria;
 
 import java.util.List;
@@ -40,5 +41,14 @@ public class RideController {
             @RequestBody RideCriteria rideCriteria
     ) {
         return ResponseEntity.ok(rideService.getRidesByCriteria(rideCriteria));
+    }
+
+    @PostMapping("addStep/{rideId}")
+    public ResponseEntity<Void> addStep(
+            @RequestBody StepCreateDTO stepCreateDTO,
+            @PathVariable(value = "rideId") final Long rideId
+    ) {
+        rideService.addStep(stepCreateDTO, rideId);
+        return ResponseEntity.ok().build();
     }
 }

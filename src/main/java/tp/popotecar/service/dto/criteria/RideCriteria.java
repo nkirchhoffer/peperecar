@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import tp.popotecar.model.enumeration.Status;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class RideCriteria {
 
+    @NotNull
     Status status;
 
     LocalDate date;
@@ -23,8 +25,10 @@ public class RideCriteria {
 
     LocalTime afterTime;
 
+    @NotNull
     Long startCityId;
 
+    @NotNull
     Long endCityId;
 
     Long nbPassenger;

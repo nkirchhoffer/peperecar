@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tp.popotecar.model.Ride;
+import tp.popotecar.model.Step;
 import tp.popotecar.model.User;
 import tp.popotecar.model.enumeration.Status;
 import tp.popotecar.repository.RideRepository;
@@ -46,13 +47,9 @@ public class RideService {
 
             Ride rideSaved = rideRepository.save(ride);
 
-            Long position = 1L;
-
-            for (StepCreateDTO stepDTO : rideCreateDTO.getSteps()) {
-                stepDTO.setPosition(position);
-                stepService.addStep(stepDTO, rideSaved);
-                position++;
-            }
+            rideCreateDTO.getSteps().stream().forEach(stepCreateDTO -> {
+                stepService.addStep(stepCreateDTO, rideSaved);
+            });
 
             return getRideById(rideSaved.getId());
         }
@@ -68,6 +65,25 @@ public class RideService {
 
     public List<RideDTO> getRidesByCriteria(RideCriteria rideCriteria) {
         List<Ride> rides = rideRepository.findAll(RideSpecification.specificationFromCriteria(rideCriteria));
+        rides.stream().forEach(ride -> ride.setSteps(filterSteps(ride.getSteps(), rideCriteria.getStartCityId(), rideCriteria.getEndCityId())));
         return rideMapper.toDto(rides);
     }
+
+    public void addStep(StepCreateDTO stepCreateDTO, Long rideId) {
+        rideRepository.findById(rideId).ifPresent(ride -> stepService.addStep(stepCreateDTO, ride));
+    }
+
+    public List<Step> filterSteps(List<Step> steps, Long startCityId, Long endCityId) {
+        Optional<Step> startStep = stepService.getByCityId(startCityId);
+        Optional<Step> endStep = stepService.getByCityId(endCityId);
+        if (startStep.isPresent() && endStep.isPresent()) {
+            return steps.stream().filter(step ->
+                    (step.getTime().isAfter(startStep.get().getTime()) && step.getTime().isBefore(endStep.get().getTime())) ||
+                            step.getTime().equals(startStep.get().getTime()) || step.getTime().equals(endStep.get().getTime())
+            ).toList();
+        }
+        return steps;
+    }
+
+
 }

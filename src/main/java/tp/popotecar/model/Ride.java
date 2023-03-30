@@ -44,5 +44,6 @@ public class Ride {
     private User driver;
 
     @OneToMany(mappedBy="ride")
+    @OrderBy("time asc")
     private List<Step> steps;
 }

@@ -17,7 +17,6 @@ public class StepCreateDTO {
     private LocalDate date;
 
     private LocalTime time;
-    private Long position;
 
     private Long cityId;
 }

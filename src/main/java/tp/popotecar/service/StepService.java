@@ -8,6 +8,8 @@ import tp.popotecar.model.City;
 import tp.popotecar.repository.StepRepository;
 import tp.popotecar.service.dto.StepCreateDTO;
 import tp.popotecar.service.mapper.StepCreateMapper;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,12 +22,16 @@ public class StepService {
 
     private final CityService cityService;
     public void addStep(StepCreateDTO stepCreateDTO, Ride ride) {
-        Step step = stepCreateMapper.toEntity(stepCreateDTO);
+        Step stepToAdd = stepCreateMapper.toEntity(stepCreateDTO);
         Optional<City> city = cityService.getById(stepCreateDTO.getCityId());
         if (city.isPresent()) {
-            step.setCity(city.get());
-            step.setRide(ride);
-            stepRepository.save(step);
+            stepToAdd.setCity(city.get());
+            stepToAdd.setRide(ride);
+            stepRepository.save(stepToAdd);
         }
+    }
+
+    public Optional<Step> getByCityId(Long cityId) {
+        return stepRepository.findByCity_Id(cityId);
     }
 }

@@ -19,7 +19,5 @@ public class StepDTO {
 
     private LocalTime time;
 
-    private Long position;
-
     private City city;
 }
