@@ -33,7 +33,7 @@ public class RideController {
     public ResponseEntity<RideDTO> getRide(
             @PathVariable(value = "id") final Long id
             ) {
-        return ResponseEntity.ok(rideService.getRideById(id));
+        return ResponseEntity.ok(rideService.getRideDTOById(id));
     }
 
     @GetMapping
@@ -41,14 +41,5 @@ public class RideController {
             @RequestBody RideCriteria rideCriteria
     ) {
         return ResponseEntity.ok(rideService.getRidesByCriteria(rideCriteria));
-    }
-
-    @PostMapping("addStep/{rideId}")
-    public ResponseEntity<Void> addStep(
-            @RequestBody StepCreateDTO stepCreateDTO,
-            @PathVariable(value = "rideId") final Long rideId
-    ) {
-        rideService.addStep(stepCreateDTO, rideId);
-        return ResponseEntity.ok().build();
     }
 }

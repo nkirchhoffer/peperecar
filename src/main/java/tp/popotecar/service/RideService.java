@@ -1,6 +1,5 @@
 package tp.popotecar.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ import tp.popotecar.repository.RideRepository;
 import tp.popotecar.repository.specification.RideSpecification;
 import tp.popotecar.service.dto.RideCreateDTO;
 import tp.popotecar.service.dto.RideDTO;
-import tp.popotecar.service.dto.StepCreateDTO;
-import tp.popotecar.service.dto.StepDTO;
 import tp.popotecar.service.dto.criteria.RideCriteria;
 import tp.popotecar.service.mapper.RideMapper;
 
@@ -51,15 +48,20 @@ public class RideService {
                 stepService.addStep(stepCreateDTO, rideSaved);
             });
 
-            return getRideById(rideSaved.getId());
+            return getRideDTOById(rideSaved.getId());
         }
 
         return null;
     }
 
-    public RideDTO getRideById(Long id) {
+    public RideDTO getRideDTOById(Long id) {
         Optional<Ride> ride = rideRepository.findById(id);
         return ride.map(rideMapper::toDto).orElse(null);
+
+    }
+
+    public Optional<Ride> getRideById(Long id) {
+        return rideRepository.findById(id);
 
     }
 
@@ -67,10 +69,6 @@ public class RideService {
         List<Ride> rides = rideRepository.findAll(RideSpecification.specificationFromCriteria(rideCriteria));
         rides.stream().forEach(ride -> ride.setSteps(filterSteps(ride.getSteps(), rideCriteria.getStartCityId(), rideCriteria.getEndCityId())));
         return rideMapper.toDto(rides);
-    }
-
-    public void addStep(StepCreateDTO stepCreateDTO, Long rideId) {
-        rideRepository.findById(rideId).ifPresent(ride -> stepService.addStep(stepCreateDTO, ride));
     }
 
     public List<Step> filterSteps(List<Step> steps, Long startCityId, Long endCityId) {
