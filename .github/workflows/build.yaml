@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: openjdk:17.0
-      ports:
-
       env:
         POSTGRESQL_URL: jdbc:postgresql://postgres:5432/postgres
         POSTGRESQL_USERNAME: postgres
