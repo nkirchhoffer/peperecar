@@ -18,6 +18,8 @@ jobs:
     services:
       postgres:
         image: postgres
+        ports:
+        - 5432/tcp
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
