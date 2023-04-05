@@ -35,6 +35,9 @@ jobs:
     - name: Clean install
       run: ./mvnw clean install
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
     - name: Docker buildx
       uses: docker/setup-buildx-action@v2
 
@@ -43,4 +46,4 @@ jobs:
       with:
         context: .
         push: true
-        tag: nkirchhoffer/peperecar:latest
+        tags: nkirchhoffer/peperecar:latest
