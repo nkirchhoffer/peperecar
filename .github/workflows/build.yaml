@@ -11,9 +11,9 @@ jobs:
     container: 
       image: openjdk:17.0
       env:
-        POSTGRESQL_URL=jdbc:postgresql://127.0.0.1:5432/postgres
-        POSTGRESQL_USERNAME=postgres
-        POSTGRESQL_PASSWORD=postgres
+        POSTGRESQL_URL: jdbc:postgresql://127.0.0.1:5432/postgres
+        POSTGRESQL_USERNAME: postgres
+        POSTGRESQL_PASSWORD: postgres
 
     services:
       postgres:
