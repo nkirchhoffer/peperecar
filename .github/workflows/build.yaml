@@ -1,0 +1,40 @@
+name: Deploy service
+on:
+  push:
+    branches:
+    - main
+    - develop
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: openjdk:17.0
+      image: openjdk:17.0
+      env:
+        POSTGRESQL_URL=jdbc:postgresql://127.0.0.1:5432/postgres
+        POSTGRESQL_USERNAME=postgres
+        POSTGRESQL_PASSWORD=postgres
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Clean install
+      run: ./mvnw clean install
+
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
