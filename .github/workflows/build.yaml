@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      content: read
+      packages: write
     container: 
       image: openjdk:17.0
       env:
