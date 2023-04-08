@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      content: read
+      contents: read
       packages: write
     container: 
       image: openjdk:17.0
