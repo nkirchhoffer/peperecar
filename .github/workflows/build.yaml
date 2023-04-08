@@ -33,11 +33,23 @@ jobs:
   
     - name: Clean install
       run: ./mvnw clean install
+    
+    - name: Upload artifacts
+      uses: actions/upload-manifest@v3
+      with:
+        name: app-built
+        path: .
+        retention-days: 1
 
   push:
     needs: build
     runs-on: ubuntu-latest
     steps:
+    - name: Download artifacts
+      uses: actions/download-manifest@v3
+      with:
+        name: app-built
+        path: .
     - name: Docker buildx
       uses: docker/setup-buildx-action@v2
 
